@@ -2,7 +2,7 @@ import json,StringIO,requests,time
 from sseclient import SSEClient
 from datetime import datetime
 
-api_key = 'xKHesnu1S7+ukz9xXrC75g=='
+api_key = ''
 print_events = 'enabled'
 batch_size = 10
 batch_pause = 60
