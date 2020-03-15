@@ -1,0 +1,251 @@
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat eIM_Basic_Sanity_Report_Mail.ksh
+#!/bin/bash
+d=$( date +%Y-%m-%d)
+h=$(TZ=GMT+1 date +%H)
+(echo "Subject: eIM Basic Sanity Check Report at $d : $h "
+echo "From: tcseimasg@bt.com"
+echo "To: arul.selvam@bt.com vinoth.2.subbaiyan@bt.com infan.franklin@bt.com bharathi.dadanala@bt.com anilkumarreddy.jonnala@bt.com ramesh.natarajan@bt.com ezhilarasu.pandurangan@bt.com reenagrace.samuel@bt.com tamil.varadarajan@bt.com sakthinarayanan.ramsingh@bt.com prakash.ramamoorthy@bt.com sundaravadivelu.ekambaram@bt.com"
+#echo "To: sakthinarayanan.ramsingh@bt.com"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<p>Hi All,</p>
+<p>PFB the eIM Basic Sanity Check Report</p>
+<p><b><u><font color="#0000FF">STUCK THREAD STATUS</font></u></b></p>"
+echo "<br>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">EXECUTION TIME</TH>
+<TH align="center">COUNT</TH></TR>"
+end_value=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/stuck_thread_$h.txt|wc -l)
+for ((i=1; i<=end_value; i+=1))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/stuck_thread_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/stuck_thread_$h.txt|awk '{print $1" "$2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/stuck_thread_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/stuck_thread_$h.txt|awk '{print $3}')
+if [ $b -eq 0 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="ADFF2F">$b</TD></TR>"
+elif [ $b -le 3 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="FFA500">$b</TD></TR>"
+else
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="#FF0000">$b</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p><b><u><font color="#0000FF">ACCESS DENIED LOG COUNT STATUS</font></u></b></p>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">EXECUTION TIME</TH>
+<TH align="center">COUNT</TH></TR>"
+end_val=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/access_denied_$h.txt|wc -l)
+for ((i=1; i<=end_val; i+=1))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/access_denied_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/access_denied_$h.txt|awk '{print $1" "$2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/access_denied_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/access_denied_$h.txt|awk '{print $3}')
+if [ $b -lt 100 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="ADFF2F">$b</TD></TR>"
+elif [ $b -le 300 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="FFA500">$b</TD></TR>"
+else
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="#FF0000">$b</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p><b><u><font color="#0000FF">IDLE THREAD COUNT STATUS</font></u></b></p>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">EXECUTION TIME</TH>
+<TH align="center">COUNT</TH></TR>"
+end_val=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/idle_thread_$h.txt|wc -l)
+for ((i=1; i<=end_val; i+=1))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/idle_thread_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/idle_thread_$h.txt|awk '{print $1" "$2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/idle_thread_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/idle_thread_$h.txt|awk '{print $3}')
+if [ $b -eq 0 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="ADFF2F">$b</TD></TR>"
+elif [ $b -le 3 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="FFA500">$b</TD></TR>"
+else
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="#FF0000">$b</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p><b><u><font color="#0000FF">MAXIMUM CAPACITY POOL STATUS</font></u></b></p>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">EXECUTION TIME</TH>
+<TH align="center">COUNT</TH></TR>"
+end_val=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/max_capacity_pool_$h.txt|wc -l)
+for ((i=1; i<=end_val; i+=1))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/max_capacity_pool_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/max_capacity_pool_$h.txt|awk '{print $1" "$2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/max_capacity_pool_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/max_capacity_pool_$h.txt|awk '{print $3}')
+if [ $b -eq 0 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="ADFF2F">$b</TD></TR>"
+elif [ $b -le 3 ]
+then
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="FFA500">$b</TD></TR>"
+else
+echo "<TR><TD align="center">$a</TD><TD align="center" bgcolor="#FF0000">$b</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p><b><u><font color="#0000FF">PENDING REQUEST STATUS</font></u></b></p>"
+echo "<p><b><font color="#FF0000">Managed Servers are in the order MS1 to MS12 and MS14</font></b></p>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">MANAGED SERVER</TH>
+<TH align="center">EXECUTION TIME</TH>
+<TH align="center">TOTAL THREADS</TH>
+<TH align="center">IDLE THREADS</TH>
+<TH align="center">PENDING REQUEST</TH></TR>"
+end_val=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|wc -l)
+for ((i=1; i<=end_val; i+=1))
+{
+m=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|awk '{print $1}')
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|awk '{print $2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|awk '{print $5}')
+c=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|awk '{print $8}')
+d=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/pending_request_$h.txt|awk '{print $12}')
+echo "<TR><TD align="center">$m</TD><TD align="center">$a</TD><TD align="center">$b</TD></TD><TD align="center">$c</TD>"
+if [ $d -eq 0 ]
+then
+echo "<TD align="center" bgcolor="ADFF2F">$d</TD></TR>"
+elif [ $d -le 3 ]
+then
+echo "<TD align="center" bgcolor="FFA500">$d</TD></TR>"
+else
+echo "<TD align="center" bgcolor="#FF0000">$d</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p><b><u><font color="#0000FF">HEAP MEMORY STATUS</font></u></b></p>"
+echo "<p><b><font color="#FF0000">Managed Servers are in the order MS1 to MS12 and MS14,MS23,MS24</font></b></p>"
+echo "<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">MANAGED SERVER</TH><TH align="center">EXECUTION TIME</TH>
+<TH align="center">HEAP FREE SPACE (in %)</TH></TR>"
+end_val=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt|wc -l)
+for ((i=1; i<=end_val; i+=1))
+{
+m=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt|awk '{print $1}')
+a=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt|awk '{print $2}')
+b=$(cat /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/heap_mem_$h.txt|awk '{print $4}')
+echo "<TR><TD align="center">$m</TD><TD align="center">$a</TD>"
+if [ $b -gt 30 ]
+then
+echo "<TD align="center" bgcolor="ADFF2F">$b</TD></TR>"
+elif [ $b -ge 20 ]
+then
+echo "<TD align="center" bgcolor="FFA500">$b</TD></TR>"
+else
+echo "<TD align="center" bgcolor="#FF0000">$b</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Thanks & Regards,</p>"
+echo "<p>eIMASG</p>"
+echo "</head>
+</html>" ) | /usr/lib/sendmail -t
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $
+
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat stuck_thread_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+time=$(date +"%H %M")
+dat=`date '+%d-%h-%Y' | tr [:lower:] [:upper:]`
+hour=`date +%H`
+prev_hour=$(TZ=GMT+1 date +%H)
+s=`grep -i 'StuckthreadMax' /prd/app/zn-01/wls_domains/bcbwdp1a/logs/bea/managed*bcbwdp1a.log*|grep -ic '$dat $hour:'`
+echo $time" "$s >> ${path}stuck_thread_$hour.txt
+chmod 777 ${path}stuck_thread_$hour.txt
+rm ${path}stuck_thread_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat idle_thread_count_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+time=$(date +"%H %M")
+hour=`date +%H`
+dat=$(TZ=BST+$h date +%d%m%Y_%H)
+prev_hour=$(TZ=GMT+1 date +%H)
+s=`grep "Idle : 0" /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed*_bcbwdp1a_thread_logscan.arch | grep $dat | wc -l`
+echo $time" "$s >> ${path}idle_thread_$hour.txt
+chmod 777 ${path}idle_thread_$hour.txt
+rm ${path}idle_thread_$prev_hour.txt
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat heap_memory_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+hour=`date +%H`
+prev_hour=$(TZ=GMT+1 date +%H)
+for ((i=1; i<=12; i+=1))
+{
+a=$i
+b=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed${i}_bcbwdp1a_jvm_logscan.log)
+echo MS-$a" "$b >> ${path}heap_mem_$hour.txt
+}
+c=14
+d=23
+e=24
+f=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed14_bcbwdp1a_jvm_logscan.log)
+g=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed23_bcbwdp1a_jvm_logscan.log)
+h=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed24_bcbwdp1a_jvm_logscan.log)
+echo MS-$c" "$f  >> ${path}heap_mem_$hour.txt
+echo MS-$d" "$g  >> ${path}heap_mem_$hour.txt
+echo MS-$e" "$h  >> ${path}heap_mem_$hour.txt
+chmod 777 ${path}heap_mem_$hour.txt
+rm ${path}heap_mem_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat access_denied_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+time=$(date +"%H %M")
+dat=`date '+%Y-%m-%d'`
+hour=`date +%H`
+prev_hour=$(TZ=GMT+1 date +%H)
+s=`grep "accessDenied" /prd/app/zn-01/wls_domains/bcbwdp1a/logs/bea/managed*_bcbwdp1a_access.log*| grep $dat| grep $hour:..:..|wc -l`
+echo $time" "$s >> ${path}access_denied_$hour.txt
+chmod 777 ${path}access_denied_$hour.txt
+rm ${path}access_denied_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat pending_request_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+hour=`date +%H`
+prev_hour=$(TZ=GMT+1 date +%H)
+for ((i=1; i<=12; i+=1))
+{
+a=$i
+b=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed${i}_bcbwdp1a_thread_logscan.log)
+echo MS-$a" "$b  >> ${path}pending_request_$hour.txt
+}
+c=24
+d=$(cat /prd/app/zn-01/wls_domains/bcbwdp1a/logscan/managed24_bcbwdp1a_thread_logscan.log)
+echo MS-$c" "$d  >> ${path}pending_request_$hour.txt
+chmod 777 ${path}pending_request_$hour.txt
+rm ${path}pending_request_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $ cat max_capacity_pool_check.ksh
+#!/bin/bash
+path="/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report/";
+time=$(date +"%H %M")
+dat=`date '+%d-%h-%Y' | tr [:lower:] [:upper:]`
+hour=`date +%H`
+prev_hour=$(TZ=GMT+1 date +%H)
+s=`grep -i "Reached maximum capacity of pool" /prd/app/zn-01/wls_domains/bcbwdp1a/logs/bea/managed*_bcbwdp1a.log | grep -ic '$dat $hour:'`
+echo $time" "$s >> ${path}max_capacity_pool_$hour.txt
+chmod 777 ${path}max_capacity_pool_$hour.txt
+rm ${path}max_capacity_pool_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/eIM_Basic_Sanity_Report $
+

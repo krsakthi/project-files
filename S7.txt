@@ -1,0 +1,229 @@
+dys079a004 bcbwdp1a $cat PDF_PARTHI.ksh
+#!/bin/bash
+
+email_list="james.2.hansen@bt.com paul.t.cunningham@bt.com steven.livermore@bt.com adrian.guy@bt.com tcseimasg@bt.com";
+A=`date +%H%M`
+if [ $A -eq 0110 ]
+then
+cp /dev/null /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+printf {" %-11s %-4s  %-15s  %-28s  %-20s \n","DATE","HOUR","TIME-OUTs","TOTAL-TRANSACTIONs","% of TIMEOUTs"} > /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+fi
+
+if [ $A -eq 0010 ]
+then
+
+g=`date +%Z`
+if [ $g == GMT ]
+then
+h=1
+else
+h=0
+fi
+a=`TZ=BST+$h date "+%Y-%m-%d %H"`
+b=`date +'%H'`
+#c=`expr $b \- 1`
+c=`echo $a|awk '{print $2}'|sed -e 's/^0/ /'`
+cd /prd/app/zn-01/wls_domains/bcbwdp1a
+rm -rf PDF.zip 2>/dev/null
+mkdir PDF
+set -- `echo "$a"|awk '{print $1,$2}'`
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log.$1|grep "$a"|grep "getPDFDownloadURL_stops" > PDF/BALPDFDownloadURL_stops.txt
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log.$1|grep "$a"|grep "getPdfFromAmdocs_stops" > PDF/AMDOCSPDFFromAmdocs_stops.txt
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log.$1|grep "$a"|grep "downloadPdfAction_stopStopWatch" > PDF/TOTALTIME_PdfAction_stopStopWatch.txt
+zip -r PDF PDF
+A=0
+count1=0
+count2=0
+count3=0
+count1=`grep -i ReportServiceImpl /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log.$1 | grep "$a" | grep -ic reportService_socEx_Error`
+count2=`grep -i downloadPdfAction_startStopWatch /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log.$1 | grep "$a" |wc -l`
+A=`expr $count1 \* 100`
+
+if [ $count2 -eq 0 ]
+then
+count2=1
+count3=$(echo "scale=2; $A / $count2" | bc -l)
+printf {" %-11s %-4s  %15s  %28s  %20s \n",$1,$2,$count1,$count2,$count3} >> /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+echo "mail"
+(echo "Subject: Entire_PDF_Log `TZ=aaa24 date +'%d-%h-%Y'` AT `echo $c` hours"
+echo "From: tcseimasg@bt.com"
+echo "To: $email_list"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor=#000000 cellpadding=3 border=2 cellspacing=0 align=center>
+<TR bgcolor='A52A2A'>
+<TH colspan="5" scope="colgroup"><font color="white" >PDF_LOG_STATUS</font></TH>
+</TR>
+</TABLE>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor="white" cellpadding=3 border=2 cellspacing=1 align=center>
+<TR>
+    <TH scope="col">DATE</TH>
+    <TH scope="col">HOUR</TH>
+    <TH scope="col">TIME-OUTS</TH>
+    <TH scope="col">TOTAL-TRANSACTION</TH>
+<TH scope="col">% OF TIMEOUTs</TH>
+</TR>"
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log| sed '1d' |sed -e 's/[A-Za-z\/\.0-9%-_]*/<td align="center">&<\/td>/g' -e 's:<td align="center"></td>::g' -e 's/^[ ]*/<tr>&/g' -e 's/$/&<\/tr>/g'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type:application/octet-stream;name=PDF.zip"
+echo "Content-Transfer-Encoding:x-uuencode"
+echo "Content-Disposition:inline;attachement; filename=PDF.zip"
+uuencode PDF.zip PDF.zip
+echo "</table>
+</head>
+</html>" ) | /usr/lib/sendmail -t
+
+else
+count3=$(echo "scale=2; $A / $count2" | bc -l)
+printf {" %-11s %-4s  %15s  %28s  %20s \n",$1,$2,$count1,$count2,$count3} >> /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+(echo "Subject: Entire_PDF_Log `TZ=aaa24 date +'%d-%h-%Y'` AT `echo $c` hours"
+echo "From: tcseimasg@bt.com"
+echo "To: $email_list"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor=#000000 cellpadding=3 border=2 cellspacing=0 align=center>
+<TR bgcolor='A52A2A'>
+<TH colspan="5" scope="colgroup"><font color="white" >PDF_LOG_STATUS</font></TH>
+</TR>
+</TABLE>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor="white" cellpadding=3 border=2 cellspacing=1 align=center>
+<TR>
+    <TH scope="col">DATE</TH>
+    <TH scope="col">HOUR</TH>
+    <TH scope="col">TIME-OUTS</TH>
+    <TH scope="col">TOTAL-TRANSACTION</TH>
+<TH scope="col">% OF TIMEOUTs</TH>
+</TR>"
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log| sed '1d' |sed -e 's/[A-Za-z\/\.0-9%-_]*/<td align="center">&<\/td>/g' -e 's:<td align="center"></td>::g' -e 's/^[ ]*/<tr>&/g' -e 's/$/&<\/tr>/g'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type:application/octet-stream;name=PDF.zip"
+echo "Content-Transfer-Encoding:x-uuencode"
+echo "Content-Disposition:inline;attachement; filename=PDF.zip"
+uuencode PDF.zip PDF.zip
+echo "</table>
+</head>
+</html>" ) | /usr/lib/sendmail -t
+fi
+
+else
+
+g=`date +%Z`
+if [ $g == GMT ]
+then
+h=1
+else
+h=0
+fi
+a=`TZ=BST+$h date "+%Y-%m-%d %H"`
+b=`date +'%H'`
+#c=`expr $b \- 1`
+c=`echo $a|awk '{print $2}'|sed -e 's/^0/ /'`
+cd /prd/app/zn-01/wls_domains/bcbwdp1a
+rm -rf PDF.zip 2>/dev/null
+mkdir PDF
+set -- `echo "$a"|awk '{print $1,$2}'`
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log|grep "$a"|grep "getPDFDownloadURL_stops" > PDF/BALPDFDownloadURL_stops.txt
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log|grep "$a"|grep "getPdfFromAmdocs_stops" > PDF/AMDOCSPDFFromAmdocs_stops.txt
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log|grep "$a"|grep "downloadPdfAction_stopStopWatch" > PDF/TOTALTIME_PdfAction_stopStopWatch.txt
+zip -r PDF PDF
+A=0
+count1=0
+count2=0
+count3=0
+count1=`grep -i ReportServiceImpl /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log | grep "$a" | grep -ic reportService_socEx_Error`
+count2=`grep -i downloadPdfAction_startStopWatch /prd/app/zn-01/wls_domains/bcbwdp1a/logs/managed*_bcbwdp1a/managed*_bcbwdp1a_eim_log4j.log | grep "$a" | wc -l`
+A=`expr $count1 \* 100`
+if [ $count2 -eq 0 ]
+then
+count2=1
+count3=$(echo "scale=2; $A / $count2" | bc -l)
+printf {" %-11s %-4s  %15s  %28s  %20s \n",$1,$2,$count1,$count2,$count3} >> /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+(echo "Subject: Entire_PDF_Log `date +'%d-%h-%Y'` AT `echo $c` hours"
+echo "From: tcseimasg@bt.com"
+echo "To: $email_list"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor=#000000 cellpadding=3 border=2 cellspacing=0 align=center>
+<TR bgcolor='A52A2A'>
+<TH colspan="5" scope="colgroup"><font color="white" >PDF_LOG_STATUS</font></TH>
+</TR>
+</TABLE>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor="white" cellpadding=3 border=2 cellspacing=1 align=center>
+<TR>
+    <TH scope="col">DATE</TH>
+    <TH scope="col">HOUR</TH>
+    <TH scope="col">TIME-OUTS</TH>
+    <TH scope="col">TOTAL-TRANSACTION</TH>
+<TH scope="col">% OF TIMEOUTs</TH>
+</TR>"
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log| sed '1d' |sed -e 's/[A-Za-z\/\.0-9%-_]*/<td align="center">&<\/td>/g' -e 's:<td align="center"></td>::g' -e 's/^[ ]*/<tr>&/g' -e 's/$/&<\/tr>/g'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type:application/octet-stream;name=PDF.zip"
+echo "Content-Transfer-Encoding:x-uuencode"
+echo "Content-Disposition:inline;attachement; filename=PDF.zip"
+uuencode PDF.zip PDF.zip
+echo "</table>
+</head>
+</html>" ) | /usr/lib/sendmail -t
+
+else
+count3=$(echo "scale=2; $A / $count2" | bc -l)
+printf {" %-11s %-4s  %15s  %28s  %20s \n",$1,$2,$count1,$count2,$count3} >> /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log
+(echo "Subject: Entire_PDF_Log `date +'%d-%h-%Y'` AT `echo $c` hours"
+echo "From: tcseimasg@bt.com"
+echo "To: $email_list"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor=#000000 cellpadding=3 border=2 cellspacing=0 align=center>
+<TR bgcolor='A52A2A'>
+<TH colspan="5" scope="colgroup"><font color="white" >PDF_LOG_STATUS</font></TH>
+</TR>
+</TABLE>
+<table bgcolor="E9967A" width=50% valign=top width=3 height=3 bordercolor="white" cellpadding=3 border=2 cellspacing=1 align=center>
+<TR>
+    <TH scope="col">DATE</TH>
+    <TH scope="col">HOUR</TH>
+    <TH scope="col">TIME-OUTS</TH>
+    <TH scope="col">TOTAL-TRANSACTION</TH>
+<TH scope="col">% OF TIMEOUTs</TH>
+</TR>"
+cat /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/PDF_stats1.log| sed '1d' |sed -e 's/[A-Za-z\/\.0-9%-_]*/<td align="center">&<\/td>/g' -e 's:<td align="center"></td>::g' -e 's/^[ ]*/<tr>&/g' -e 's/$/&<\/tr>/g'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type:application/octet-stream;name=PDF.zip"
+echo "Content-Transfer-Encoding:x-uuencode"
+echo "Content-Disposition:inline;attachement; filename=PDF.zip"
+uuencode PDF.zip PDF.zip
+echo "</table>
+</head>
+</html>" ) | /usr/lib/sendmail -t
+fi
+fi
+dys079a004 bcbwdp1a $

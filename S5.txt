@@ -1,0 +1,49 @@
+[eimapd5]/prd/gbl-share/archive/scripts_backup_199_20032015/script/sub-partition_Aug/EDX_RPT_STATEMENT_FACT $
+[eimapd5]/prd/gbl-share/archive/scripts_backup_199_20032015/script/sub-partition_Aug/EDX_RPT_STATEMENT_FACT $ cat man_sub_datewise_script_creation_script.sh
+#!/bin/bash
+echo "PLEASE PROVIDE THE DETAILS BY REFERING TO THE EXAMPLES GIVEN ALONG WITH THE QUESTION"
+echo " "
+echo "Please enter the current path [(i.e.) where the scripts are needed to be created] : "
+read a
+echo "Please enter the month for which the date wise script needed to be created [Give the month name as it is in the sample script in the path Example : If the sample script is sub_datewise_sept01.sh then give sept ] : "
+read b
+echo "Please enter the month in numerical terms [Example : January - 01] : "
+read f
+echo "Please enter the year in numerical terms [Example : YYYY format] : "
+read g
+echo "Please enter the start date for which the date wise script needed to be created [ Example : If we need to create script from 3rd please enter 2 (i.e) one less tha
+n the actual date] :"
+read c
+echo "Please enter the end date for which the date wise script needed to be created [ Example : If you need to create script till 31st please enter 30 (i.e) one less th
+an the actual date] :"
+read d
+for ((i=${c}; i<=${d}; i+=1))
+{
+j=$((i+1))
+if [ $i -lt 9 ]
+then
+cp -p ${a}/sub_datewise_${b}0${i}.sh ${a}/sub_datewise_${b}0${j}.sh
+ex ${a}/sub_datewise_${b}0${j}.sh <<EOEX
+:%s/0${i}${f}${g}/0${j}${f}${g}/g
+:%s/${g}-${f}-0${i}/${g}-${f}-0${j}/g
+:x
+EOEX
+elif [ $i -eq 9 ]
+then
+cp -p ${a}/sub_datewise_${b}0${i}.sh ${a}/sub_datewise_${b}${j}.sh
+ex ${a}/sub_datewise_${b}${j}.sh <<EOEX
+:%s/0${i}${f}${g}/${j}${f}${g}/g
+:%s/${g}-${f}-0${i}/${g}-${f}-${j}/g
+:x
+EOEX
+else
+cp -p ${a}/sub_datewise_${b}${i}.sh ${a}/sub_datewise_${b}${j}.sh
+ex ${a}/sub_datewise_${b}${j}.sh <<EOEX
+:%s/${i}${f}${g}/${j}${f}${g}/g
+:%s/${g}-${f}-${i}/${g}-${f}-${j}/g
+:x
+EOEX
+fi
+}
+
+[eimapd5]/prd/gbl-share/archive/scripts_backup_199_20032015/script/sub-partition_Aug/EDX_RPT_STATEMENT_FACT $

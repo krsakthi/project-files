@@ -1,0 +1,419 @@
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat checknode1mount.ksh
+#!/bin/bash
+
+exec &> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+
+echo "Node 1 - 10.247.8.213"
+
+df -k | awk '{print $4,$5}'|sed "16 d"|sed "17 d"|sed "16 d"|sed "1 d"
+
+df -k | grep "/boot" | awk '{print $5,$6,$7}'
+
+df -k | grep "/dev/shm" | awk '{print $5,$6,$7}'
+
+df -k | grep "/tmp" | awk '{print $5,$6,$7}'
+
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat checknode2mount.ksh
+#!/bin/bash
+echo "Node 2 - 10.247.8.218" >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep ".*/$" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/home" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/usr" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/var" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/opt" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep ".*/osmf/mgmt$" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/osmf/mgmt/scheduler" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/usr/openv" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/dboracle" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/dborafiles" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/oraasm" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/oracrs" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat checknode3mount.ksh
+#!/bin/bash
+echo "Node 3 - 10.247.8.220" >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep ".*/$" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/home" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/usr" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/var" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/opt" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep ".*/osmf/mgmt$" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/osmf/mgmt/scheduler" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/usr/openv" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/dboracle" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/dborafiles" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/oraasm" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+df -k | grep "/oracrs" | awk '{print $4,$5}' >> /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat check204mount.ksh
+#!/bin/bash
+
+echo "Application Server - 10.247.11.204" >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+
+df -k | grep ".*/$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/dev$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/export/home" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/osmf/mgmt$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/UCPS" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/osmf/mgmt/appmgmt$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/appmgmt/gpp" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/xfer" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/tmp" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/wls_domain_logs" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/software" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/wls_domains" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/appl" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/archive" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat check207mount.ksh
+#!/bin/bash
+
+echo "Application Server - 10.247.11.207" >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+
+df -k | grep ".*/$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/dev$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/export/home" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/lib$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/osmf/mgmt$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/UCPS" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/osmf/mgmt/appmgmt$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/appmgmt/gpp" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/osmf/mgmt/xfer" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep ".*/platform$" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/sbin" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/usr" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/var/crash" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/platform/sun4v/lib/libc_psr.so.1" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/platform/sun4v/lib/sparcv9/libc_psr.so.1" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/tmp" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/wls_domain_logs" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/software" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/wls_domains" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/appl" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-01/archive" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat check206mount.ksh
+#!/bin/bash
+
+exec &> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+
+echo "Application Server - 10.247.11.206"
+
+df -k | awk '{print $5,$6}'
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat check205mount.ksh
+#!/bin/bash
+
+echo "Application Server - Domain B - 10.247.11.205" >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+
+df -k | grep "/prd/app/zn-02/software" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-02/wls_domains" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-02/appl" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-02/wls_domain_logs" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+df -k | grep "/prd/app/zn-02/archive" | awk '{print $5,$6}' >> /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+
+
+
+
+
+
+
+
+
+Mail Scripts ::
+
+
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat mailalldbnodemountoutput.ksh
+#!/bin/bash
+(echo "Subject: DB Server Memory Utilization Report"
+echo "From: tcseimasg@bt.com"
+echo "To: eimasg@bt.com"
+#echo "To: sakthinarayanan.ramsingh@bt.com"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<p>Hi All,</p>
+<p>PFB the DB Server memory usage details</p>
+<p>Node 1 - 10.247.8.213</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+start_value=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|grep "/boot"|awk '{print $1}')
+end_value_i=$(expr $start_value - 1)
+for ((i=3; i<=$end_value_i; i+=2))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $a -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $a -gt 75 ]
+then
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+end_value_j=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|grep "/tmp"|awk '{print $1}')
+for ((j=start_value; j<=$end_value_j; j+=1))
+{
+b=$(cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $b -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $b -gt 75 ]
+then
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.8.213</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Node 2 - 10.247.8.218</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+node2_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|grep "Node 2 - 10.247.8.218"|awk '{print $1}')
+start_value_k=$(expr $node2_start + 1)
+node3_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|grep "Node 3 - 10.247.8.220"|awk '{print $1}')
+end_value_k=$(expr $node3_start - 1)
+for ((k=$start_value_k; k<=$end_value_k; k+=1))
+{
+c=$(cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $c -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.8.218</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $c -gt 75 ]
+then
+echo "<TR><TD align="center">10.247.8.218</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.8.218</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Node 3 - 10.247.8.220</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+start_value_m=$(expr $node3_start + 1)
+end_value_m=$(cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|wc -l)
+for ((m=$start_value_m; m<=$end_value_m; m+=1))
+{
+d=$(cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $d -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.8.220</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $d -gt 75 ]
+then
+echo "<TR><TD align="center">10.247.8.220</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.8.220</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/Allnodemountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>NOTE:</P>"
+echo "<p>If the status is indicated in GREEN then the used space in the path is less than 75% - No Action Required</p>"
+echo "<p>If the status is indicated in AMBER then the used space in the path is more than or equal to 75% - Action Required</p>"
+echo "<p>If the status is indicated in RED then the used space in the path is more than or equal to 90% - Housekeeping needed immediately</p>"
+
+
+echo "<p>Thanks & Regards,</p>"
+echo "<p>eIMASG</p>"
+
+echo "</head>
+</html>" ) | /usr/lib/sendmail -t
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+
+
+
+--App server mail--
+
+
+
+
+
+
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $ cat mailAppServermountoutput.ksh
+#!/bin/bash
+(echo "Subject: Application Server Memory Utilization Report"
+echo "From: tcseimasg@bt.com"
+echo "To: eimasg@bt.com"
+#echo "To: sakthinarayanan.ramsingh@bt.com"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<p>Hi All,</p>
+<p>PFB the Application Server memory usage details</p>
+<p>Application Server - 10.247.11.206</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+app206_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|grep "Application Server - 10.247.11.206"|awk '{print $1}')
+app204_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|grep "Application Server - 10.247.11.204"|awk '{print $1}')
+app207_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|grep "Application Server - 10.247.11.207"|awk '{print $1}')
+app205_start=$(cat -n /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|grep "Application Server - Domain B - 10.247.11.205"|awk '{print $1}')
+start_value_i=$(expr $app206_start + 2)
+end_value_i=$(expr $app204_start - 1)
+for ((i=$start_value_i; i<=$end_value_i; i+=1))
+{
+a=$(cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $a -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.11.206</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $a -ge 75 ]
+then
+echo "<TR><TD align="center">10.247.11.206</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.11.206</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${i}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Application Server - 10.247.11.204</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+start_value_k=$(expr $app204_start + 1)
+end_value_k=$(expr $app207_start - 1)
+for ((k=$start_value_k; k<=$end_value_k; k+=1))
+{
+b=$(cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $b -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.11.204</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $b -ge 75 ]
+then
+echo "<TR><TD align="center">10.247.11.204</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.11.204</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${k}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Application Server - 10.247.11.207</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+start_value_j=$(expr $app207_start + 1)
+end_value_j=$(expr $app205_start - 1)
+for ((j=$start_value_j; j<=$end_value_j; j+=1))
+{
+c=$(cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $c -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.11.207</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $c -ge 75 ]
+then
+echo "<TR><TD align="center">10.247.11.207</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.11.207</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${j}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>Application Server [ Domain B ] - 10.247.11.205</p>
+<table bgcolor="F0FFFF" width=50% border=1>
+<TR><TH align="center">IP Address</TH>
+<TH align="center">PATH</TH>
+<TH align="center">USAGE</TH></TR>"
+start_value_m=$(expr $app205_start + 1)
+end_value_m=$(cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|wc -l)
+for ((m=$start_value_m; m<=$end_value_m; m+=1))
+{
+d=$(cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'| sed 's/%//')
+if [ $d -ge 90 ]
+then
+echo "<TR><TD align="center">10.247.11.205</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="#FF0000">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+elif [ $d -ge 75 ]
+then
+echo "<TR><TD align="center">10.247.11.205</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="FFA500">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+else
+echo "<TR><TD align="center">10.247.11.205</TD>
+<TD align="center">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $2}'`</TD>
+<TD align="center" bgcolor="ADFF2F">`cat /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/mount_point/AppServermountoutput.txt|awk '{print $1}'`</TD></TR>"
+fi
+}
+echo "</table>"
+
+echo "<p>NOTE:</p>"
+echo "<p>If the status is indicated in GREEN then the used space in the path is less than 75% - No Action Required</p>"
+echo "<p>If the status is indicated in AMBER then the used space in the path is more than or equal to 75% - Action Required</p>"
+echo "<p>If the status is indicated in RED then the used space in the path is more than or equal to 90% - Housekeeping needed immediately</p>"
+
+echo "<p>Thanks & Regards,</p>"
+echo "<p>eIMASG</p>"
+
+echo "</head>
+</html>" ) | /usr/lib/sendmail -t
+[eimapd5]/prd/gbl-share/software/asg_scripts/mount_point $

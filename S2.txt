@@ -1,0 +1,155 @@
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $ cat 204_ucbps.ksh
+#!/bin/bash
+time=$(date +"%H %M")
+hr=$(date +"%H")
+prev_hour=$(TZ=GMT+1 date +%H)
+echo "Command Executed at $time" >> /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$hr.txt
+echo " "
+/prd/app/zn-01/software/bea/mps/btwlutils/1_5/bin/ucbps >> /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$hr.txt
+echo " "
+chmod 777 /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$hr.txt
+rm /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $ cat 207_ucbps.ksh
+#!/bin/bash
+time=$(date +"%H %M")
+hr=$(date +"%H")
+prev_hour=$(TZ=GMT+1 date +%H)
+echo "Command executed at : $time" >> /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$hr.txt
+echo " "
+/prd/app/zn-01/software/bea/mps/btwlutils/1_5/bin/ucbps >> /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$hr.txt
+echo " "
+chmod 777 /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$hr.txt
+rm /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$prev_hour.txt
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $ cat 204_207_ucbps_Mail.ksh
+#!/bin/bash
+d=$( date +%Y-%m-%d)
+h=$(date +"%H")
+Avg_CPU_man1=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed1_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man1=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed1_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man2=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed2_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man2=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed2_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man3=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed3_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man3=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed3_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man4=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed4_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man4=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed4_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man5=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed5_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man5=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed5_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man6=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed6_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man6=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed6_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man7=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed7_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man7=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed7_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man8=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed8_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man8=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed8_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man9=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed9_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man9=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed9_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man10=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed10_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man10=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed10_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man11=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed11_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man11=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed11_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man12=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed12_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man12=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "managed12_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man14=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed14_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man14=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed14_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man23=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed23_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man23=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed23_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_man24=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed24_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_man24=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|grep -i "managed24_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+Avg_CPU_admin=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "admin_bcbwdp1a"|awk '{ sum += $2 } END { print sum / 4; }')
+Avg_MEM_admin=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|grep -i "admin_bcbwdp1a"|awk '{ sum += $3 } END { print sum / 4; }')
+(echo "Subject: eIM MS-CPU & MEMORY Utilization Report at $d : $h "
+echo "From: tcseimasg@bt.com"
+echo "To: eimasg@bt.com arul.selvam@bt.com vinoth.2.subbaiyan@bt.com"
+#echo "To: sakthinarayanan.ramsingh@bt.com"
+echo "MIME-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+echo "<html>
+<head>
+<p>Hi All,</p>
+<p>PFB the eIM Managed Server - CPU & MEMORY Utilization Report</p>
+<p><b><u><font color="#0000FF">204 SERVER</font></u></b></p>"
+value_end=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt|wc -l)
+val_end=$(cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt|wc -l)
+for ((m=1; m<=$value_end; m+=1))
+{
+echo "<br>"
+echo "`cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt| sed "${m}q;d" /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/204_MS_details_$h.txt`"
+echo "<br>"
+}
+echo "<br>"
+echo "<br>"
+echo "<br>"
+echo "<p><b><u><font color="#0000FF">207 SERVER</font></u></b></p>"
+for ((n=1; n<=val_end; n+=1))
+{
+echo "<br>"
+echo "`cat /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt| sed "${n}q;d" /prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL/207_MS_details_$h.txt`"
+echo "<br>"
+}
+echo "<p>AVERAGE CPU & MEMORY UTILIZATION TABLE at $d : $h</p>
+<table bgcolor="#FFE4E1" width=50% border=1>
+<TR><TH align="center">Managed Servers</TH>
+<TH align="center">AVG CPU UTIL</TH>
+<TH align="center">AVG MEM UTIL</TH></TR>"
+echo "<TR><TD align="center">Admin Server - 204</TD>
+<TD align="center">$Avg_CPU_admin</TD>
+<TD align="center">$Avg_MEM_admin</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 1</TD>
+<TD align="center">$Avg_CPU_man1</TD>
+<TD align="center">$Avg_MEM_man1</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 2</TD>
+<TD align="center">$Avg_CPU_man2</TD>
+<TD align="center">$Avg_MEM_man2</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 3</TD>
+<TD align="center">$Avg_CPU_man3</TD>
+<TD align="center">$Avg_MEM_man3</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 4</TD>
+<TD align="center">$Avg_CPU_man4</TD>
+<TD align="center">$Avg_MEM_man4</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 5</TD>
+<TD align="center">$Avg_CPU_man5</TD>
+<TD align="center">$Avg_MEM_man5</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 6</TD>
+<TD align="center">$Avg_CPU_man6</TD>
+<TD align="center">$Avg_MEM_man6</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 7</TD>
+<TD align="center">$Avg_CPU_man7</TD>
+<TD align="center">$Avg_MEM_man7</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 8</TD>
+<TD align="center">$Avg_CPU_man8</TD>
+<TD align="center">$Avg_MEM_man8</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 9</TD>
+<TD align="center">$Avg_CPU_man9</TD>
+<TD align="center">$Avg_MEM_man9</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 10</TD>
+<TD align="center">$Avg_CPU_man10</TD>
+<TD align="center">$Avg_MEM_man10</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 11</TD>
+<TD align="center">$Avg_CPU_man11</TD>
+<TD align="center">$Avg_MEM_man11</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 12</TD>
+<TD align="center">$Avg_CPU_man12</TD>
+<TD align="center">$Avg_MEM_man12</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 14</TD>
+<TD align="center">$Avg_CPU_man14</TD>
+<TD align="center">$Avg_MEM_man14</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 23</TD>
+<TD align="center">$Avg_CPU_man23</TD>
+<TD align="center">$Avg_MEM_man23</TD></TR>"
+echo "<TR><TD align="center">Managed Server - 24</TD>
+<TD align="center">$Avg_CPU_man24</TD>
+<TD align="center">$Avg_MEM_man24</TD></TR>"
+echo "</table>"
+echo "<p>Thanks & Regards,</p>"
+echo "<p>eIMASG</p>"
+echo "</head>
+</html>" ) | /usr/lib/sendmail -t
+[eimapd5]/prd/gbl-share/software/asg_scripts/MS_CPU_Memory_UTIL $

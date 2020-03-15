@@ -1,0 +1,159 @@
+dys079a001 bcbwdp1a $cat stat_hr_rep.bash
+#!/bin/bash
+
+path="/prd/app/zn-01/wls_domains/bcbwdp1a/ASG/ACCESS_LOG/";
+path2="/prd/app/zn-01/wls_domains/bcbwdp1a/logscan/";
+
+
+g=`date +%Z`
+if [ $g == GMT  ]
+then
+h=1
+else
+h=0
+fi
+
+
+file=`TZ=BST+$h date +%b-%d`
+dat=`TZ=BST+$h date +%d%m%Y_%H`
+dat1=`TZ=BST+$h date +%Y-%m-%d`
+dat2=`TZ=BST+$h date +%Y-%m-%d,%H`
+dat3=`date +%b' '%e`
+dat4=`TZ=BST+$h date +%Y-%m-%d' '%H:`
+dat5=`TZ=BST+$h date +%b-%d`
+
+
+
+rawdata()
+{
+grep "$dat1" `ls -lrt /prd/app/zn-01/wls_domains/bcbwdp1a/logs/bea/managed*_bcbwdp1a_access.log*|grep "$dat3"|nawk '{print $9}'`|nawk '{print $1,$2,$3,$4,$5,$6,$7}'|grep "$dat4"  > ${path}raw.txt
+}
+
+
+percentage()
+{
+bhits=`egrep -c "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt`
+lt1=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 1'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt2=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 2'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt3=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 3'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt5=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 5'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt10=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 10'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt15=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 15'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt20=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 20'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt25=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 25'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt30=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 30'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+lt35=`egrep "/eIM/bya/|/eIM/loggedout/bya|/eIM/cya/" ${path}raw.txt|nawk '$7 <= 35'|wc -l|awk '{printf "%.2f \n" , $1 /'$bhits' *100}'`
+}
+
+getdetails()
+{
+itcnt=`grep "$dat" ${path2}managed*_bcbwdp1a_thread_logscan.arch|grep -ic "Idle : 0"`
+tim=`TZ=BST+$h date +%H`
+if [ $tim -eq 0 ]
+then
+{
+find /prd/app/zn-01/wls_domains/bcbwdp1a/ASG/ACCESS_LOG/*-* -mtime +1 -exec rm {} \;
+touch ${path}hr${dat5}
+}
+fi
+printf "$dat2 $bhits $lt1 $lt2 $lt3 $lt5 $lt10 $lt15 $lt20 $lt25 $lt30 $lt35 $itcnt"|tr -s ' ' ',' >> ${path}hr$dat5
+printf "\n" >> ${path}hr$dat5
+}
+
+
+
+html()
+{
+echo "<p> </p>" >${path}hrep.html
+echo "<p> <u> <font color="#85BB65" face="arial" size="5"> HITS and THREAD COUNT FOR DOMAIN A </font></u></p>" >>${path}hrep.html
+echo "<style type='text/css'>td{font-family:verdana; color:blue; font-size:10pt;}</style>" >>${path}hrep.html
+echo "<table border="1" cellpadding="3" cellspacing="0.5" width="50%" bgcolor="#C1D6F2">" >>${path}hrep.html
+echo "<tr>" >>${path}hrep.html
+echo "<th/>DATE" >>${path}hrep.html
+echo "<th/>HOUR" >>${path}hrep.html
+echo "<th/>TOT HITS" >>${path}hrep.html
+echo "<th/>LESS THAN 1SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 2SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 3SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 5SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 10SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 15SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 20SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 25SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 30SEC" >>${path}hrep.html
+echo "<th/>LESS THAN 35SEC" >>${path}hrep.html
+echo "<th/>IDLE THREAD COUNT" >>${path}hrep.html
+echo "</tr>" >>${path}hrep.html
+
+for i in `cat ${path}hr${dat5}`
+do
+echo "<tr>" >>${path}hrep.html
+for j in {1..14}
+do
+if [ $j -lt 11 ]
+then
+tmp1=`echo $i|awk -F',' '{print $'$j'}'`
+echo "<td align=\"center\"/>$tmp1" >>${path}hrep.html
+else
+if [ $j -lt 14 ]
+then
+max=95.0
+min=85.0
+tmp2=`echo $i|awk -F',' '{print $'$j'}'`
+if [ "$(echo "if (${tmp2} > ${max}) 1" | bc)" -eq 1 ]
+then
+echo "<td align=\"center\"/ bgcolor="ADFF2F">$tmp2" >>${path}hrep.html
+elif [ "$(echo "if (${tmp2} > ${min}) 1" | bc)" -eq 1 ]
+then
+echo "<td align=\"center\"/ bgcolor="FFA500">$tmp2" >>${path}hrep.html
+else
+echo "<td align=\"center\"/ bgcolor="#FF0000">$tmp2" >>${path}hrep.html
+fi
+else
+tmp2=`echo $i|awk -F',' '{print $'$j'}'`
+if [ $tmp2 -eq 0 ]
+then
+echo "<td align=\"center\"/ bgcolor="ADFF2F">$tmp2" >>${path}hrep.html
+elif [ $tmp2 -le 3 ]
+then
+echo "<td align=\"center\"/ bgcolor="FFA500">$tmp2" >>${path}hrep.html
+else
+echo "<td align=\"center\"/ bgcolor="#FF0000">$tmp2" >>${path}hrep.html
+fi
+fi
+fi
+done
+echo "</tr>" >>${path}hrep.html
+done
+}
+mail()
+{
+#!/bin/bash
+EMAIL_LIST="james.2.hansen@bt.com paul.t.cunningham@bt.com eimasg@bt.com steven.livermore@bt.com ramesh.natarajan@bt.com anilkumarreddy.jonnala@bt.com anand.paul@bt.com"
+#EMAIL_LIST="sakthinarayanan.ramsingh@bt.com ezhilarasu.pandurangan@bt.com"
+DATE=`TZ=BST date +%Y-%m-%d' '%H:`;
+EMAIL_TITLE="DAILY STATS FOR DOMAIN A AT: $DATE BST"
+outputFile="/prd/app/zn-01/wls_domains/bcbwdp1a/ASG/ACCESS_LOG/hrep.html"
+(
+echo "From: tcseimasg@bt.com"
+echo "To: ${EMAIL_LIST}"
+echo "Subject: $EMAIL_TITLE"
+echo "Mime-Version: 1.0"
+echo 'Content-Type: multipart/mixed; boundary="GvXjxJ+pjyke8COw"'
+echo "Content-Disposition: inline"
+echo ""
+echo "--GvXjxJ+pjyke8COw"
+echo "Content-Type: text/html"
+echo "Content-Disposition: inline"
+cat $outputFile
+) | /usr/lib/sendmail -t
+}
+
+rawdata
+percentage
+getdetails
+html
+mail
+
+exit;
+dys079a001 bcbwdp1a $
